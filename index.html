@@ -1570,62 +1570,11 @@ document.addEventListener('DOMContentLoaded',function(){
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
-// REPLACE THESE WITH YOUR REAL FIREBASE CONFIG (same one from your KDR Flow app)
-var kdrFirebaseConfig = {
-  apiKey: "AIzaSyDs8Hl8_NBzBEvJ-oou6Gi7nrq8ALy8dmY",
-  authDomain:"kdrsystems-c269c.firebaseapp.com",
-  projectId: "kdrsystems-c269c",
-  storageBucket: "kdrsystems-c269c.firebasestorage.app",
-  messagingSenderId: "436571279407",
-  appId: "1:436571279407:web:eeb521438b8ff87cd6b6da"
-};
-
-if (!firebase.apps.length) firebase.initializeApp(kdrFirebaseConfig);
-var kdrDb = firebase.firestore();
-
-// REPLACE THIS WITH YOUR REAL OWNER ID (from your app: Leads tab > Website Form Code button)
-var OWNER_ID = 2ovYcaLhkTgjgnQlai6XmGaMVPG3";
-
-function submitForm(e) {
-  e.preventDefault();
-  var f = document.getElementById("kdr-lead-form");
-  var btn = f.querySelector("button[type='submit']");
-  btn.disabled = true;
-  btn.textContent = "Sending...";
-
-  var firstName = f.querySelector('[name="firstName"]').value || '';
-  var lastName = f.querySelector('[name="lastName"]').value || '';
-
-  var data = {
-    id: Date.now().toString(),
-    name: (firstName + ' ' + lastName).trim(),
-    email: f.querySelector('[name="email"]').value || '',
-    phone: f.querySelector('[name="phone"]').value || '',
-    address: f.querySelector('[name="city"]').value || '',
-    service: f.querySelector('[name="service"]').value || '',
-    message: f.querySelector('[name="message"]').value || '',
-    status: "new",
-    createdAt: new Date().toISOString(),
-    source: "k-dr.net"
-  };
-
-  kdrDb.collection("users").doc(OWNER_ID).collection("leads").add(data)
-    .then(function() {
-      f.innerHTML = '<div style="text-align:center;padding:40px 20px;">' +
-        '<div style="width:60px;height:60px;background:#f0fdf4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:3px solid #22c55e;">' +
-          '<span style="font-size:28px;color:#22c55e;">✓</span>' +
-        '</div>' +
-        '<h3 style="font-size:20px;font-weight:700;margin:0 0 8px;color:#fff;">Request Received!</h3>' +
-        '<p style="font-size:15px;color:#ccc;margin:0;">Thank you, ' + (firstName || 'there') + '. We will get back to you within 24 hours.</p>' +
-      '</div>';
-    })
-    .catch(function(err) {
-      console.error("Lead error:", err);
-      alert("Something went wrong. Please call us at (732) 218-2531.");
-      btn.disabled = false;
-      btn.textContent = "Send My Request";
-    });
-}
+var kdrFirebaseConfig={apiKey:"AIzaSyDs8Hl8_NBzBEvJ-oou6Gi7nrq8ALy8dmY",authDomain:"kdrsystems-c269c.firebaseapp.com",projectId:"kdrsystems-c269c",storageBucket:"kdrsystems-c269c.firebasestorage.app",messagingSenderId:"436571279407",appId:"1:436571279407:web:eeb521438b8ff87cd6b6da"};
+if(!firebase.apps.length)firebase.initializeApp(kdrFirebaseConfig);
+var kdrDb=firebase.firestore();
+var OWNER_ID="2ovYcaLhkTgjgnQlai6XmGaMVPG3";
+function submitForm(e){e.preventDefault();var f=document.getElementById("kdr-lead-form");var btn=f.querySelector("button[type='submit']");btn.disabled=true;btn.textContent="Sending...";var firstName=f.querySelector('[name="firstName"]').value||'';var lastName=f.querySelector('[name="lastName"]').value||'';var data={id:Date.now().toString(),name:(firstName+' '+lastName).trim(),email:f.querySelector('[name="email"]').value||'',phone:f.querySelector('[name="phone"]').value||'',address:f.querySelector('[name="city"]').value||'',service:f.querySelector('[name="service"]').value||'',message:f.querySelector('[name="message"]').value||'',status:"new",createdAt:new Date().toISOString(),source:"k-dr.net"};kdrDb.collection("users").doc(OWNER_ID).collection("leads").add(data).then(function(){f.innerHTML='<div style="text-align:center;padding:40px 20px;"><div style="width:60px;height:60px;background:#f0fdf4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:3px solid #22c55e;"><span style="font-size:28px;color:#22c55e;">&#10003;</span></div><h3 style="font-size:20px;font-weight:700;margin:0 0 8px;color:#fff;">Request Received!</h3><p style="font-size:15px;color:#ccc;margin:0;">Thank you, '+(firstName||'there')+'. We will get back to you within 24 hours.</p></div>';}).catch(function(err){console.error("Lead error:",err);alert("Something went wrong. Please call us at (732) 218-2531.");btn.disabled=false;btn.textContent="Send My Request";});}
 </script>
 </body>
 </html>
