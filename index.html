@@ -1549,7 +1549,7 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 <!-- KDR Flow Lead Capture -->
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
@@ -1571,7 +1571,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var kdrDb = kdrApp.firestore();
 
     // Init EmailJS
-    emailjs.init("0MTv8FBM13ZuvUdY6");
+    emailjs.init({ publicKey: "0MTv8FBM13ZuvUdY6" });
     var OWNER_ID = "2ovYcaLhkTgjgnQlai6XmGaMVPG3";
 
     function getVal(form, name) {
