@@ -1549,7 +1549,6 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 <!-- KDR Flow Lead Capture -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
@@ -1570,8 +1569,6 @@ document.addEventListener('DOMContentLoaded',function(){
                  || firebase.initializeApp(kdrConfig, 'kdr');
     var kdrDb = kdrApp.firestore();
 
-    // Init EmailJS
-    emailjs.init({ publicKey: "0MTv8FBM13ZuvUdY6" });
     var OWNER_ID = "2ovYcaLhkTgjgnQlai6XmGaMVPG3";
 
     function getVal(form, name) {
@@ -1609,19 +1606,26 @@ document.addEventListener('DOMContentLoaded',function(){
         .then(function() {
           console.log("KDR lead saved successfully!");
 
-          // Send email notification via EmailJS
-          emailjs.send("service_5nyaqxr", "template_umqya0e", {
-            from_name: data.name,
-            reply_to:  data.email,
-            phone:     data.phone,
-            service:   data.service,
-            city:      data.address,
-            message:   data.message || "No message provided"
-          }).then(function(){
-            console.log("KDR email sent!");
-          }).catch(function(err){
-            console.warn("EmailJS error (lead still saved):", err);
-          });
+          // Send email via EmailJS REST API (no SDK needed)
+          fetch("https://api.emailjs.com/api/v1.0/email/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              service_id:  "service_5nyaqxr",
+              template_id: "template_umqya0e",
+              user_id:     "0MTv8FBM13ZuvUdY6",
+              template_params: {
+                from_name: data.name,
+                reply_to:  data.email,
+                phone:     data.phone,
+                service:   data.service,
+                city:      data.address,
+                message:   data.message || "No message provided"
+              }
+            })
+          })
+          .then(function(){ console.log("KDR email sent!"); })
+          .catch(function(err){ console.warn("Email error:", err); });
           f.innerHTML = '<div style="text-align:center;padding:40px 20px;">'
             + '<div style="width:60px;height:60px;background:#f0fdf4;border-radius:50%;'
             + 'display:flex;align-items:center;justify-content:center;margin:0 auto 16px;'
@@ -1635,3 +1639,112 @@ document.addEventListener('DOMContentLoaded',function(){
           console.error("KDR lead error:", err);
           alert("Something went wrong. Please call us at (732) 218-2531.");
           if (btn) { btn.disabled = f
+<!-- KDR Lead Capture -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+(function() {
+  try {
+    var kdrConfig = {
+      apiKey:            "AIzaSyDs8Hl8_NBzBEvJ-oou6Gi7nrq8ALy8dmY",
+      authDomain:        "kdrsystems-c269c.firebaseapp.com",
+      projectId:         "kdrsystems-c269c",
+      storageBucket:     "kdrsystems-c269c.firebasestorage.app",
+      messagingSenderId: "436571279407",
+      appId:             "1:436571279407:web:eeb521438b8ff87cd6b6da"
+    };
+
+    var kdrApp = firebase.apps.find(function(a){ return a.name === 'kdr'; })
+                 || firebase.initializeApp(kdrConfig, 'kdr');
+    var kdrDb = kdrApp.firestore();
+    var OWNER_ID = "2ovYcaLhkTgjgnQlai6XmGaMVPG3";
+
+    function getVal(form, name) {
+      var el = form.querySelector('[name="' + name + '"]');
+      return el ? el.value.trim() : '';
+    }
+
+    function sendEmail(data) {
+      return fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id:  "service_5nyaqxr",
+          template_id: "template_umqya0e",
+          user_id:     "0MTv8FBM13ZuvUdY6",
+          template_params: {
+            from_name: data.name,
+            reply_to:  data.email,
+            phone:     data.phone,
+            service:   data.service,
+            city:      data.address,
+            message:   data.message || "No message provided"
+          }
+        })
+      });
+    }
+
+    function showSuccess(form, firstName) {
+      form.innerHTML = '<div style="text-align:center;padding:40px 20px;">'
+        + '<div style="width:60px;height:60px;background:#f0fdf4;border-radius:50%;'
+        + 'display:flex;align-items:center;justify-content:center;margin:0 auto 16px;'
+        + 'border:3px solid #22c55e;">'
+        + '<span style="font-size:28px;color:#22c55e;">&#10003;</span></div>'
+        + '<h3 style="font-size:20px;font-weight:700;margin:0 0 8px;color:#fff;">Request Received!</h3>'
+        + '<p style="font-size:15px;color:#ccc;margin:0;">Thank you, '
+        + (firstName || 'there') + ". We\'ll be in touch within 24 hours.</p></div>";
+    }
+
+    window.submitForm = function(e) {
+      e.preventDefault();
+
+      var f   = document.getElementById("kdr-lead-form");
+      var btn = f.querySelector("button[type='submit']");
+      if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
+
+      var firstName = getVal(f, 'firstName');
+      var lastName  = getVal(f, 'lastName');
+
+      var data = {
+        id:        Date.now().toString(),
+        name:      (firstName + ' ' + lastName).trim() || 'Website Visitor',
+        email:     getVal(f, 'email'),
+        phone:     getVal(f, 'phone'),
+        address:   getVal(f, 'city'),
+        service:   getVal(f, 'service'),
+        message:   getVal(f, 'message'),
+        status:    "new",
+        createdAt: new Date().toISOString(),
+        source:    "k-dr.net"
+      };
+
+      // Save to Firebase
+      kdrDb.collection("users").doc(OWNER_ID).collection("leads").add(data)
+        .then(function() {
+          // Email notification
+          sendEmail(data)
+            .then(function(){ console.log("Email sent!"); })
+            .catch(function(err){ console.warn("Email error:", err); });
+          showSuccess(f, firstName);
+        })
+        .catch(function(err) {
+          console.error("Firebase error:", err);
+          // Firebase failed — try email only so lead is not lost
+          sendEmail(data)
+            .then(function(){
+              showSuccess(f, firstName);
+            })
+            .catch(function(){
+              alert("Something went wrong. Please call us at (732) 218-2531.");
+              if (btn) { btn.disabled = false; btn.textContent = "Send My Request"; }
+            });
+        });
+    };
+
+  } catch(err) {
+    console.error("KDR init error:", err);
+  }
+})();
+</script>
+</body>
+</html>
