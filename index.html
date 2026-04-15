@@ -967,7 +967,7 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
       <div class="footer-col">
         <div class="footer-col-title">Contact</div>
         <a href="tel:+17322182531">(732) 218-2531</a>
-        <a href="/cdn-cgi/l/email-protection#bfd4dbcdd9dad1dcd6d1d8ffd8d2ded6d391dcd0d2" style="color:var(--orange);font-weight:600;text-decoration:none;"><span class="__cf_email__" data-cfemail="dfb4bbadb9bab1bcb6b1b89fb8b2beb6b3f1bcb0b2">[email&#160;protected]</span></a>
+        <a href="mailto:kdrfencing@gmail.com" style="color:var(--orange);font-weight:600;text-decoration:none;">kdrfencing@gmail.com</a>
         <a>Bayville, New Jersey 08721</a>
         <a href="tel:+17322182531" class="btn btn-primary" style="margin-top:16px;padding:12px 22px;font-size:12px;display:inline-flex;">Free Quote</a>
       </div>
@@ -1555,7 +1555,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <script>
 (function() {
   try {
-    var kdrConfig = {
+    var cfg = {
       apiKey:            "AIzaSyDs8Hl8_NBzBEvJ-oou6Gi7nrq8ALy8dmY",
       authDomain:        "kdrsystems-c269c.firebaseapp.com",
       projectId:         "kdrsystems-c269c",
@@ -1563,18 +1563,17 @@ document.addEventListener('DOMContentLoaded',function(){
       messagingSenderId: "436571279407",
       appId:             "1:436571279407:web:eeb521438b8ff87cd6b6da"
     };
+    var app = firebase.apps.find(function(a){ return a.name === "kdr"; })
+              || firebase.initializeApp(cfg, "kdr");
+    var db  = app.firestore();
+    var OID = "2ovYcaLhkTgjgnQlai6XmGaMVPG3";
 
-    var kdrApp = firebase.apps.find(function(a){ return a.name === "kdr"; })
-                 || firebase.initializeApp(kdrConfig, "kdr");
-    var kdrDb  = kdrApp.firestore();
-    var OWNER  = "2ovYcaLhkTgjgnQlai6XmGaMVPG3";
-
-    function getVal(form, name) {
-      var el = form.querySelector("[name=" + name + "]");
+    function val(f, n) {
+      var el = f.querySelector("[name=" + n + "]");
       return el ? el.value.trim() : "";
     }
 
-    function sendEmail(params) {
+    function sendEmail(p) {
       return fetch("https://api.emailjs.com/api/v1.0/email/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1582,21 +1581,19 @@ document.addEventListener('DOMContentLoaded',function(){
           service_id:      "service_5nyaqxr",
           template_id:     "template_umqya0e",
           user_id:         "0MTv8FBM13ZuvUdY6",
-          template_params: params
+          template_params: p
         })
       });
     }
 
-    function showSuccess(form, firstName) {
-      var msg = "Thank you, " + (firstName || "there") + ". We will be in touch within 24 hours.";
-      form.innerHTML = [
-        "<div style=\"text-align:center;padding:40px 20px;\">",
-        "<div style=\"width:60px;height:60px;background:#f0fdf4;border-radius:50%;",
-        "display:flex;align-items:center;justify-content:center;margin:0 auto 16px;",
-        "border:3px solid #22c55e;\"><span style=\"font-size:28px;color:#22c55e;\">&#10003;</span></div>",
-        "<h3 style=\"font-size:20px;font-weight:700;margin:0 0 8px;color:#fff;\">Request Received!</h3>",
-        "<p style=\"font-size:15px;color:#ccc;margin:0;\">" + msg + "</p></div>"
-      ].join("");
+    function showOK(f, first) {
+      var thanks = "Thank you, " + (first || "there") + ". We will be in touch within 24 hours.";
+      f.innerHTML = "<div style=\"text-align:center;padding:40px 20px;\">"
+        + "<div style=\"width:60px;height:60px;background:#f0fdf4;border-radius:50%;"
+        + "display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"
+        + "border:3px solid #22c55e;\"><span style=\"font-size:28px;color:#22c55e;\">&#10003;</span></div>"
+        + "<h3 style=\"font-size:20px;font-weight:700;margin:0 0 8px;color:#fff;\">Request Received!</h3>"
+        + "<p style=\"font-size:15px;color:#ccc;margin:0;\">" + thanks + "</p></div>";
     }
 
     window.submitForm = function(e) {
@@ -1605,23 +1602,23 @@ document.addEventListener('DOMContentLoaded',function(){
       var btn = f ? f.querySelector("button[type=submit]") : null;
       if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
 
-      var firstName = getVal(f, "firstName");
-      var lastName  = getVal(f, "lastName");
+      var first = val(f, "firstName");
+      var last  = val(f, "lastName");
 
       var data = {
         id:        Date.now().toString(),
-        name:      (firstName + " " + lastName).trim() || "Website Visitor",
-        email:     getVal(f, "email"),
-        phone:     getVal(f, "phone"),
-        address:   getVal(f, "city"),
-        service:   getVal(f, "service"),
-        message:   getVal(f, "message"),
+        name:      (first + " " + last).trim() || "Website Visitor",
+        email:     val(f, "email"),
+        phone:     val(f, "phone"),
+        address:   val(f, "city"),
+        service:   val(f, "service"),
+        message:   val(f, "message"),
         status:    "new",
         createdAt: new Date().toISOString(),
         source:    "k-dr.net"
       };
 
-      var emailParams = {
+      var ep = {
         name:     data.name,
         reply_to: data.email,
         message:  "Name: "    + data.name
@@ -1629,28 +1626,25 @@ document.addEventListener('DOMContentLoaded',function(){
                 + "\nEmail: "   + data.email
                 + "\nService: " + data.service
                 + "\nCity: "    + data.address
-                + "\nMessage: " + (data.message || "No message provided")
+                + "\nMessage: " + (data.message || "N/A")
       };
 
-      kdrDb.collection("users").doc(OWNER).collection("leads").add(data)
+      db.collection("users").doc(OID).collection("leads").add(data)
         .then(function() {
-          sendEmail(emailParams).catch(function(err) { console.warn("Email warn:", err); });
-          showSuccess(f, firstName);
+          sendEmail(ep).catch(function(er){ console.warn("email:", er); });
+          showOK(f, first);
         })
-        .catch(function(firebaseErr) {
-          console.error("Firebase error:", firebaseErr);
-          sendEmail(emailParams)
-            .then(function() { showSuccess(f, firstName); })
-            .catch(function() {
+        .catch(function(er) {
+          console.error("firebase:", er);
+          sendEmail(ep)
+            .then(function(){ showOK(f, first); })
+            .catch(function(){
               if (btn) { btn.disabled = false; btn.textContent = "Send My Request"; }
               alert("Something went wrong. Please call (732) 218-2531.");
             });
         });
     };
-
-  } catch(err) {
-    console.error("KDR init error:", err);
-  }
+  } catch(e) { console.error("init:", e); }
 })();
 </script>
 </body>
