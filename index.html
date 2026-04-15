@@ -1446,7 +1446,7 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
   <div class="page-hero"><div class="breadcrumb"><span onclick="navigate('home')">Home</span><span class="sep">/</span><span class="current">Blog</span></div><span class="eyebrow">Insights &amp; Tips</span><h1 class="page-hero-title">The K-DR <span class="accent">Blog</span></h1><p class="page-hero-sub">Property tips, seasonal advice, and fencing insights from Ocean County's trusted property service professionals.</p></div>
   <section style="background:var(--bg);padding:80px 6%;"><div class="blog-grid" id="blog-grid"></div><div style="text-align:center;margin-top:52px;"><button class="btn btn-outline-orange">Load More Posts</button></div></section>
 </div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── ALL JAVASCRIPT ──
 var allPages=['home','portfolio','services','materials','areas','about','faq','blog'];
 
@@ -1564,14 +1564,14 @@ document.addEventListener('DOMContentLoaded',function(){
       appId:             "1:436571279407:web:eeb521438b8ff87cd6b6da"
     };
 
-    var kdrApp = firebase.apps.find(function(a){ return a.name === 'kdr'; })
-                 || firebase.initializeApp(kdrConfig, 'kdr');
-    var kdrDb = kdrApp.firestore();
-    var OWNER_ID = "2ovYcaLhkTgjgnQlai6XmGaMVPG3";
+    var kdrApp = firebase.apps.find(function(a){ return a.name === "kdr"; })
+                 || firebase.initializeApp(kdrConfig, "kdr");
+    var kdrDb  = kdrApp.firestore();
+    var OWNER  = "2ovYcaLhkTgjgnQlai6XmGaMVPG3";
 
     function getVal(form, name) {
-      var el = form.querySelector('[name="' + name + '"]');
-      return el ? el.value.trim() : '';
+      var el = form.querySelector("[name=" + name + "]");
+      return el ? el.value.trim() : "";
     }
 
     function sendEmail(params) {
@@ -1579,73 +1579,69 @@ document.addEventListener('DOMContentLoaded',function(){
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          service_id:  "service_5nyaqxr",
-          template_id: "template_umqya0e",
-          user_id:     "0MTv8FBM13ZuvUdY6",
+          service_id:      "service_5nyaqxr",
+          template_id:     "template_umqya0e",
+          user_id:         "0MTv8FBM13ZuvUdY6",
           template_params: params
         })
       });
     }
 
     function showSuccess(form, firstName) {
-      form.innerHTML =
-        '<div style="text-align:center;padding:40px 20px;">'
-        + '<div style="width:60px;height:60px;background:#f0fdf4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:3px solid #22c55e;">'
-        + '<span style="font-size:28px;color:#22c55e;">&#10003;</span></div>'
-        + '<h3 style="font-size:20px;font-weight:700;margin:0 0 8px;color:#fff;">Request Received!</h3>'
-        + '<p style="font-size:15px;color:#ccc;margin:0;">Thank you, ' + (firstName || 'there') + '. We'll be in touch within 24 hours.</p>'
-        + '</div>';
+      var msg = "Thank you, " + (firstName || "there") + ". We will be in touch within 24 hours.";
+      form.innerHTML = [
+        "<div style=\"text-align:center;padding:40px 20px;\">",
+        "<div style=\"width:60px;height:60px;background:#f0fdf4;border-radius:50%;",
+        "display:flex;align-items:center;justify-content:center;margin:0 auto 16px;",
+        "border:3px solid #22c55e;\"><span style=\"font-size:28px;color:#22c55e;\">&#10003;</span></div>",
+        "<h3 style=\"font-size:20px;font-weight:700;margin:0 0 8px;color:#fff;\">Request Received!</h3>",
+        "<p style=\"font-size:15px;color:#ccc;margin:0;\">" + msg + "</p></div>"
+      ].join("");
     }
 
     window.submitForm = function(e) {
       e.preventDefault();
-
       var f   = document.getElementById("kdr-lead-form");
-      var btn = f.querySelector("button[type='submit']");
+      var btn = f ? f.querySelector("button[type=submit]") : null;
       if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
 
-      var firstName = getVal(f, 'firstName');
-      var lastName  = getVal(f, 'lastName');
+      var firstName = getVal(f, "firstName");
+      var lastName  = getVal(f, "lastName");
 
       var data = {
         id:        Date.now().toString(),
-        name:      (firstName + ' ' + lastName).trim() || 'Website Visitor',
-        email:     getVal(f, 'email'),
-        phone:     getVal(f, 'phone'),
-        address:   getVal(f, 'city'),
-        service:   getVal(f, 'service'),
-        message:   getVal(f, 'message'),
+        name:      (firstName + " " + lastName).trim() || "Website Visitor",
+        email:     getVal(f, "email"),
+        phone:     getVal(f, "phone"),
+        address:   getVal(f, "city"),
+        service:   getVal(f, "service"),
+        message:   getVal(f, "message"),
         status:    "new",
         createdAt: new Date().toISOString(),
         source:    "k-dr.net"
       };
 
       var emailParams = {
-        name:      data.name,
-        reply_to:  data.email,
-        phone:     data.phone,
-        service:   data.service,
-        city:      data.address,
-        message:   "Name: " + data.name
-                 + "\nPhone: " + data.phone
-                 + "\nEmail: " + data.email
-                 + "\nService: " + data.service
-                 + "\nCity: " + data.address
-                 + "\nMessage: " + (data.message || "No message provided")
+        name:     data.name,
+        reply_to: data.email,
+        message:  "Name: "    + data.name
+                + "\nPhone: "   + data.phone
+                + "\nEmail: "   + data.email
+                + "\nService: " + data.service
+                + "\nCity: "    + data.address
+                + "\nMessage: " + (data.message || "No message provided")
       };
 
-      // Try Firebase first, email either way
-      kdrDb.collection("users").doc(OWNER_ID).collection("leads").add(data)
+      kdrDb.collection("users").doc(OWNER).collection("leads").add(data)
         .then(function() {
-          sendEmail(emailParams).catch(function(err){ console.warn("Email error:", err); });
+          sendEmail(emailParams).catch(function(err) { console.warn("Email warn:", err); });
           showSuccess(f, firstName);
         })
-        .catch(function(err) {
-          console.error("Firebase error:", err);
-          // Firebase failed — still send email so lead is not lost
+        .catch(function(firebaseErr) {
+          console.error("Firebase error:", firebaseErr);
           sendEmail(emailParams)
-            .then(function(){ showSuccess(f, firstName); })
-            .catch(function(){
+            .then(function() { showSuccess(f, firstName); })
+            .catch(function() {
               if (btn) { btn.disabled = false; btn.textContent = "Send My Request"; }
               alert("Something went wrong. Please call (732) 218-2531.");
             });
