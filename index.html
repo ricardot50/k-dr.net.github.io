@@ -1549,6 +1549,7 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 <!-- KDR Flow Lead Capture -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
@@ -1568,6 +1569,9 @@ document.addEventListener('DOMContentLoaded',function(){
     var kdrApp = firebase.apps.find(function(a){ return a.name === 'kdr'; })
                  || firebase.initializeApp(kdrConfig, 'kdr');
     var kdrDb = kdrApp.firestore();
+
+    // Init EmailJS
+    emailjs.init("0MTv8FBM13ZuvUdY6");
     var OWNER_ID = "2ovYcaLhkTgjgnQlai6XmGaMVPG3";
 
     function getVal(form, name) {
@@ -1604,6 +1608,20 @@ document.addEventListener('DOMContentLoaded',function(){
       kdrDb.collection("users").doc(OWNER_ID).collection("leads").add(data)
         .then(function() {
           console.log("KDR lead saved successfully!");
+
+          // Send email notification via EmailJS
+          emailjs.send("service_5nyaqxr", "template_umqya0e", {
+            from_name: data.name,
+            reply_to:  data.email,
+            phone:     data.phone,
+            service:   data.service,
+            city:      data.address,
+            message:   data.message || "No message provided"
+          }).then(function(){
+            console.log("KDR email sent!");
+          }).catch(function(err){
+            console.warn("EmailJS error (lead still saved):", err);
+          });
           f.innerHTML = '<div style="text-align:center;padding:40px 20px;">'
             + '<div style="width:60px;height:60px;background:#f0fdf4;border-radius:50%;'
             + 'display:flex;align-items:center;justify-content:center;margin:0 auto 16px;'
