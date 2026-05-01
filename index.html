@@ -554,6 +554,7 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
   div[style*="display:inline-flex;align-items:center;justify-content:center"] img {
     height:220px !important;
   }
+  
 
   /* Page hero */
   .page-hero { padding:100px 4% 48px; }
@@ -649,6 +650,19 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
 }
 
 
+/* ── HERO VIDEO ── */
+.hero video {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+}
+@media(max-width:680px){
+  .hero { min-height:100svh; }
+}
+
 /* ── HERO LOGO GLOW ── */
 .logo-glow-wrap {
   display:inline-flex;
@@ -727,60 +741,84 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
 <div class="page active" id="page-home">
 
   <!-- HERO -->
-  <section class="hero">
-    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:16px;animation:fadeUp 0.6s ease both;gap:0;">
-      <!-- LOGO + GLOW -->
-      <div class="logo-glow-wrap">
-        <img src="https://res.cloudinary.com/dubkhajl6/image/upload/e_trim,f_auto,q_auto/v1771732550/logo_black_d2flg0.png" alt="K-DR Logo" class="hero-logo-img">
+  <section class="hero" style="position:relative;padding:0;min-height:100vh;background:#000;overflow:hidden;">
+
+    <!-- FULLSCREEN VIDEO BACKGROUND -->
+    <video autoplay muted loop playsinline
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+      <source src="https://res.cloudinary.com/dubkhajl6/video/upload/f_mp4,q_auto,vc_h264/v1777601594/ffce9d60926b4ef19684ec111c5ab9c4_hdqvbr.mov" type="video/mp4">
+    </video>
+
+    <!-- DARK OVERLAY -->
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.45) 0%,rgba(0,0,0,0.65) 60%,rgba(0,0,0,0.75) 100%);z-index:1;"></div>
+
+    <!-- ALL HERO CONTENT ON TOP OF VIDEO -->
+    <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:120px 6% 80px;text-align:center;">
+
+      <!-- LOGO -->
+      <div class="logo-glow-wrap" style="margin-bottom:8px;animation:fadeUp 0.6s ease both;">
+        <img src="https://res.cloudinary.com/dubkhajl6/image/upload/e_trim,f_auto,q_auto/v1771732550/logo_black_d2flg0.png"
+          alt="K-DR Logo" class="hero-logo-img"
+          style="height:160px;filter:brightness(0) invert(1);">
       </div>
-      <!-- SLOGAN under logo -->
-      <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,20px);font-style:italic;font-weight:400;color:var(--mid);margin:2px 0 6px;line-height:1.2;">Your Property, Our Experience</p>
-      <!-- TITLE -->
-      <p style="font-family:'Montserrat',sans-serif;font-size:clamp(26px,4.2vw,56px);font-weight:900;letter-spacing:5px;text-transform:uppercase;color:#1a1a1a;margin:0;line-height:1.1;position:relative;z-index:2;">K&#8209;DR FENCING &amp; HOME SERVICES</p>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;animation:fadeUp 0.8s ease 0.1s both;flex-wrap:wrap;">
-      <a href="tel:+17322182531" style="color:var(--mid);font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:6px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.72a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        (732) 218-2531
-      </a>
-      <span style="color:var(--border);">|</span>
-      <a href="https://www.instagram.com/kdrcontractingg/" target="_blank" style="color:var(--mid);display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Instagram
-      </a>
-      <a href="https://www.facebook.com/profile.php?id=61580029134327" target="_blank" style="color:var(--mid);display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        Facebook
-      </a>
-      <a href="https://www.tiktok.com/@kdrcontracting" target="_blank" style="color:var(--mid);display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--orange)"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.28 8.28 0 0 0 4.83 1.54V6.84a4.85 4.85 0 0 1-1.06-.15z"/></svg>
-        TikTok
-      </a>
-      <a href="https://www.google.com/search?q=K-DR+FENCING&rlz=1C5CHFA_enUS1041US1041&oq=k-dr+fe&gs_lcrp=EgZjaHJvbWUqCAgAEEUYJxg7MggIABBFGCcYOzIGCAEQRRg5MgYIAhAjGCcyCggDEAAYChgWGB4yCAgEEAAYFhgeMgYIBRBFGD0yBggGEEUYPTIGCAcQRRg90gEIMjAwMmowajeoAgCwAgA&sourceid=chrome&ie=UTF-8" target="_blank" style="color:var(--mid);display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        Google
-      </a>
-    </div>
-    <div class="hero-badge"><span></span>Ocean County &amp; Surrounding Areas</div>
-    
 
-    <p class="hero-desc">Professional fencing, gutter cleaning, snow removal, and fall cleanup — trusted by homeowners and businesses across New Jersey for over 5 years.</p>
-    <div class="hero-actions" style="flex-wrap:wrap;">
-      <a class="btn btn-primary" href="tel:+17322182531">Get a Free Quote</a>
-      <button class="btn btn-outline" onclick="navigate('services')">Our Services</button>
-    </div>
+      <!-- SLOGAN -->
+      <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2vw,22px);font-style:italic;color:rgba(255,255,255,0.85);margin:0 0 6px;animation:fadeUp 0.65s ease 0.05s both;">Your Property, Our Experience</p>
 
-    <!-- LICENSE BADGE -->
-    <div style="margin-top:20px;display:inline-flex;align-items:center;gap:10px;background:#f5f0ec;border:1px solid #e8e2dc;border-radius:100px;padding:10px 28px;animation:fadeUp 1s ease 0.6s both;">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <span style="font-size:13px;font-weight:600;color:#3a3a3a;letter-spacing:1.5px;text-transform:uppercase;">NJ Licensed &amp; Insured &nbsp;&bull;&nbsp; NJHIC# 13VH14078800</span>
-    </div>
+      <!-- BUSINESS NAME -->
+      <p style="font-family:'Montserrat',sans-serif;font-size:clamp(20px,3.8vw,52px);font-weight:900;letter-spacing:5px;text-transform:uppercase;color:#fff;margin:0 0 20px;line-height:1.1;text-shadow:0 2px 16px rgba(0,0,0,0.5);animation:fadeUp 0.7s ease 0.1s both;">K&#8209;DR FENCING &amp; HOME SERVICES</p>
 
-    <div class="hero-stats">
-      <div class="stat-item"><span class="stat-num">150+</span><div class="stat-label">Projects Completed</div></div>
-      <div class="stat-item"><span class="stat-num">5+</span><div class="stat-label">Years Experience</div></div>
-      <div class="stat-item"><span class="stat-num">80mi</span><div class="stat-label">Service Radius</div></div>
-      <div class="stat-item"><span class="stat-num">100%</span><div class="stat-label">Satisfaction</div></div>
+      <!-- SOCIALS ROW -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:20px;animation:fadeUp 0.75s ease 0.15s both;">
+        <a href="tel:+17322182531" style="color:#fff;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.72a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (732) 218-2531
+        </a>
+        <span style="color:rgba(255,255,255,0.3);">|</span>
+        <a href="https://www.instagram.com/kdrcontractingg/" target="_blank" style="color:#fff;display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61580029134327" target="_blank" style="color:#fff;display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+        <a href="https://www.tiktok.com/@kdrcontracting" target="_blank" style="color:#fff;display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--orange)"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.28 8.28 0 0 0 4.83 1.54V6.84a4.85 4.85 0 0 1-1.06-.15z"/></svg>
+          TikTok
+        </a>
+        <a href="https://www.google.com/search?q=K-DR+FENCING&rlz=1C5CHFA_enUS1041US1041&oq=k-dr+fe&gs_lcrp=EgZjaHJvbWUqCAgAEEUYJxg7MggIABBFGCcYOzIGCAEQRRg5MgYIAhAjGCcyCggDEAAYChgWGB4yCAgEEAAYFhgeMgYIBRBFGD0yBggGEEUYPTIGCAcQRRg90gEIMjAwMmowajeoAgCwAgA&sourceid=chrome&ie=UTF-8" target="_blank" style="color:#fff;display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Google
+        </a>
+      </div>
+
+      <!-- BADGE -->
+      <div class="hero-badge" style="background:rgba(232,87,10,0.2);border-color:rgba(232,87,10,0.5);color:#fff;animation:fadeUp 0.8s ease 0.2s both;"><span></span>Ocean County &amp; Surrounding Areas</div>
+
+      <!-- DESCRIPTION -->
+      <p class="hero-desc" style="color:rgba(255,255,255,0.85);animation:fadeUp 0.85s ease 0.25s both;">Professional fencing, gutter cleaning, snow removal, and fall cleanup — trusted by homeowners and businesses across New Jersey for over 5 years.</p>
+
+      <!-- BUTTONS -->
+      <div class="hero-actions" style="flex-wrap:wrap;animation:fadeUp 0.9s ease 0.3s both;">
+        <a class="btn btn-primary" href="tel:+17322182531">Get a Free Quote</a>
+        <button class="btn btn-outline-white" onclick="navigate('services')">Our Services</button>
+      </div>
+
+      <!-- LICENSE -->
+      <div style="margin-top:20px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:100px;padding:10px 28px;animation:fadeUp 0.95s ease 0.35s both;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.9);letter-spacing:1.5px;text-transform:uppercase;">NJ Licensed &amp; Insured &nbsp;&bull;&nbsp; NJHIC# 13VH14078800</span>
+      </div>
+
+      <!-- STATS -->
+      <div class="hero-stats" style="border-top-color:rgba(255,255,255,0.15);animation:fadeUp 1s ease 0.4s both;">
+        <div class="stat-item" style="border-right-color:rgba(255,255,255,0.15);"><span class="stat-num">150+</span><div class="stat-label" style="color:rgba(255,255,255,0.7);">Projects Completed</div></div>
+        <div class="stat-item" style="border-right-color:rgba(255,255,255,0.15);"><span class="stat-num">5+</span><div class="stat-label" style="color:rgba(255,255,255,0.7);">Years Experience</div></div>
+        <div class="stat-item" style="border-right-color:rgba(255,255,255,0.15);"><span class="stat-num">80mi</span><div class="stat-label" style="color:rgba(255,255,255,0.7);">Service Radius</div></div>
+        <div class="stat-item"><span class="stat-num">100%</span><div class="stat-label" style="color:rgba(255,255,255,0.7);">Satisfaction</div></div>
+      </div>
+
     </div>
   </section>
 
