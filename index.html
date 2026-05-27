@@ -808,6 +808,191 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
 </style>
 </head>
 <body>
+<!-- ───── POPUP QUOTE FORM ───── -->
+<div id="kdr-popup-overlay" style="
+  position:fixed;inset:0;z-index:99999;
+  background:rgba(0,0,0,0.6);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+  animation:fadeIn 0.4s ease;
+  backdrop-filter:blur(4px);
+">
+  <div style="
+    background:#fff;border-radius:24px;
+    max-width:520px;width:100%;
+    padding:40px 36px 32px;
+    position:relative;
+    box-shadow:0 24px 80px rgba(0,0,0,0.25);
+    animation:slideUp 0.4s cubic-bezier(0.4,0,0.2,1);
+    max-height:90vh;overflow-y:auto;
+  ">
+    <!-- Close button -->
+    <button onclick="document.getElementById('kdr-popup-overlay').style.display='none'"
+      style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:22px;cursor:pointer;color:#999;line-height:1;padding:4px 8px;"
+      aria-label="Close">&#x2715;</button>
+
+    <!-- Header -->
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="width:48px;height:3px;background:#E8570A;margin:0 auto 16px;border-radius:2px;"></div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#111;margin:0 0 8px;">Get Your Free Quote</h2>
+      <p style="font-size:14px;color:#666;margin:0;">No obligation. We respond within 24 hours.</p>
+    </div>
+
+    <!-- Form -->
+    <form id="kdr-popup-form" onsubmit="submitPopupForm(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div>
+          <label style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#666;display:block;margin-bottom:6px;">First Name</label>
+          <input type="text" name="firstName" placeholder="John" required
+            style="width:100%;padding:12px 16px;border:1.5px solid #e8e2dc;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border 0.2s;"
+            onfocus="this.style.borderColor='#E8570A'" onblur="this.style.borderColor='#e8e2dc'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#666;display:block;margin-bottom:6px;">Last Name</label>
+          <input type="text" name="lastName" placeholder="Smith"
+            style="width:100%;padding:12px 16px;border:1.5px solid #e8e2dc;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border 0.2s;"
+            onfocus="this.style.borderColor='#E8570A'" onblur="this.style.borderColor='#e8e2dc'">
+        </div>
+      </div>
+      <div style="margin-bottom:14px;">
+        <label style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#666;display:block;margin-bottom:6px;">Phone Number</label>
+        <input type="tel" name="phone" placeholder="(732) 218-2531" required
+          style="width:100%;padding:12px 16px;border:1.5px solid #e8e2dc;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border 0.2s;"
+          onfocus="this.style.borderColor='#E8570A'" onblur="this.style.borderColor='#e8e2dc'">
+      </div>
+      <div style="margin-bottom:14px;">
+        <label style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#666;display:block;margin-bottom:6px;">Service Needed</label>
+        <select name="service" required
+          style="width:100%;padding:12px 16px;border:1.5px solid #e8e2dc;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;background:#fff;transition:border 0.2s;"
+          onfocus="this.style.borderColor='#E8570A'" onblur="this.style.borderColor='#e8e2dc'">
+          <option value="">Select a service...</option>
+          <option>Fencing — Residential</option>
+          <option>Fencing — Commercial</option>
+          <option>Gutter Cleaning</option>
+          <option>Snow Removal</option>
+          <option>Fall Cleanup</option>
+          <option>Multiple Services</option>
+        </select>
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#666;display:block;margin-bottom:6px;">Your Town</label>
+        <input type="text" name="city" placeholder="Toms River, Brick, Lakewood..."
+          style="width:100%;padding:12px 16px;border:1.5px solid #e8e2dc;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border 0.2s;"
+          onfocus="this.style.borderColor='#E8570A'" onblur="this.style.borderColor='#e8e2dc'">
+      </div>
+      <button type="submit" id="popup-submit-btn" style="
+        width:100%;padding:16px;
+        background:#E8570A;color:#fff;
+        border:none;border-radius:12px;
+        font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;
+        cursor:pointer;transition:all 0.25s;
+        letter-spacing:0.5px;
+      "
+        onmouseover="this.style.background='#F47332'" onmouseout="this.style.background='#E8570A'">
+        Send My Request
+      </button>
+    </form>
+
+    <!-- Trust line -->
+    <p style="text-align:center;font-size:12px;color:#999;margin:14px 0 0;">
+      🔒 NJHIC# 13VH14078800 &nbsp;·&nbsp; Licensed &amp; Insured &nbsp;·&nbsp; Free Estimate
+    </p>
+  </div>
+</div>
+
+<style>
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+@media(max-width:480px){
+  #kdr-popup-overlay > div { padding:28px 20px 24px; }
+  #kdr-popup-overlay > div > form > div:first-child { grid-template-columns:1fr !important; }
+}
+</style>
+
+<script>
+// Show popup after 3 seconds
+setTimeout(function() {
+  var popup = document.getElementById('kdr-popup-overlay');
+  if (popup && !sessionStorage.getItem('kdr-popup-dismissed')) {
+    popup.style.display = 'flex';
+  }
+}, 3000);
+
+// Close on overlay click
+document.getElementById('kdr-popup-overlay').addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.style.display = 'none';
+    sessionStorage.setItem('kdr-popup-dismissed', '1');
+  }
+});
+
+window.submitPopupForm = function(e) {
+  e.preventDefault();
+  var f = document.getElementById('kdr-popup-form');
+  var btn = document.getElementById('popup-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  var firstName = f.querySelector('[name=firstName]').value.trim();
+  var lastName  = f.querySelector('[name=lastName]').value.trim();
+
+  var data = {
+    id:        Date.now().toString(),
+    name:      (firstName + ' ' + lastName).trim() || 'Website Visitor',
+    phone:     f.querySelector('[name=phone]').value.trim(),
+    email:     '',
+    address:   f.querySelector('[name=city]').value.trim(),
+    service:   f.querySelector('[name=service]').value,
+    message:   'Lead from popup form',
+    status:    'new',
+    createdAt: new Date().toISOString(),
+    source:    'k-dr.net popup'
+  };
+
+  var ep = {
+    name:     data.name,
+    reply_to: data.email,
+    message:  'POPUP LEAD' +
+              '\nName: '    + data.name +
+              '\nPhone: '   + data.phone +
+              '\nService: ' + data.service +
+              '\nCity: '    + data.address
+  };
+
+  // Save to Firebase
+  try {
+    var app2 = firebase.apps.find(function(a){ return a.name === 'kdr'; });
+    if (app2) {
+      app2.firestore().collection('users').doc('2ovYcaLhkTgjgnQlai6XmGaMVPG3').collection('leads').add(data);
+    }
+  } catch(err) { console.warn('Firebase popup:', err); }
+
+  // Send email
+  fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      service_id:      'service_5nyaqxr',
+      template_id:     'template_umqya0e',
+      user_id:         '0MTv8FBM13ZuvUdY6',
+      template_params: ep
+    })
+  }).catch(function(err){ console.warn('Email popup:', err); });
+
+  // Show success
+  document.getElementById('kdr-popup-overlay').innerHTML =
+    '<div style="background:#fff;border-radius:24px;max-width:420px;width:100%;padding:48px 36px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.25);">' +
+    '<div style="width:64px;height:64px;background:#f0fdf4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:3px solid #22c55e;">' +
+    '<span style="font-size:30px;color:#22c55e;">&#10003;</span></div>' +
+    '<h3 style="font-family:Playfair Display,serif;font-size:24px;font-weight:700;margin:0 0 10px;">Request Received!</h3>' +
+    '<p style="color:#666;font-size:15px;margin:0 0 24px;">Thank you, ' + (firstName || 'there') + '. We will be in touch within 24 hours.</p>' +
+    '<button onclick="document.getElementById('kdr-popup-overlay').style.display='none'" ' +
+    'style="background:#E8570A;color:#fff;border:none;padding:14px 32px;border-radius:100px;font-size:14px;font-weight:700;cursor:pointer;">View Our Work</button>' +
+    '</div>';
+  sessionStorage.setItem('kdr-popup-dismissed', '1');
+};
+</script>
+
 <!-- ───── NAV ───── -->
 <nav id="navbar">
   <div class="logo-area" onclick="navigate('home')" style="align-items:center;cursor:pointer;padding:4px 0;">
@@ -905,6 +1090,11 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
         </a>
       </div>
 
+      <!-- URGENCY BANNER -->
+      <div style="background:rgba(232,87,10,0.9);color:#fff;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:8px 20px;border-radius:100px;margin-bottom:14px;animation:fadeUp 0.75s ease 0.15s both;display:inline-block;">
+        🗓️ Now Booking Summer 2026 Installs — Slots Filling Fast
+      </div>
+
       <!-- BADGE -->
       <div class="hero-badge" style="background:rgba(232,87,10,0.2);border-color:rgba(232,87,10,0.5);color:#fff;animation:fadeUp 0.8s ease 0.2s both;margin-bottom:10px;"><span></span>Ocean County &amp; Surrounding Areas</div>
 
@@ -913,8 +1103,9 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
 
       <!-- BUTTONS -->
       <div class="hero-actions" style="flex-wrap:wrap;animation:fadeUp 0.9s ease 0.3s both;">
-        <a class="btn btn-primary" href="tel:+17322182531">Get a Free Quote</a>
+        <a class="btn btn-primary" href="#quote-form-section" onclick="document.getElementById('quote-form-section').scrollIntoView({behavior:'smooth'});return false;">Get a Free Quote</a>
         <button class="btn btn-outline-white" onclick="navigate('services')">Our Services</button>
+        <a class="btn btn-outline-white" href="sms:+17322182531">💬 Text Us</a>
       </div>
 
       <!-- LICENSE -->
@@ -935,7 +1126,7 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
   </section>
 
   <!-- QUOTE FORM -->
-  <section class="quote-section">
+  <section class="quote-section" id="quote-form-section">
     <div class="quote-inner">
       <span class="eyebrow" style="color:rgba(232,87,10,0.9)">Free Estimate</span>
       <h2 class="section-title" style="color:#fff;">Request a <span class="accent">Free Quote</span></h2>
@@ -1076,7 +1267,7 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
     <p class="section-sub" style="margin:0 auto 40px;">Based in Bayville, NJ — serving Ocean County and all surrounding areas within 80 miles. Residential and commercial clients welcome.</p>
     <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.1);max-width:900px;margin:0 auto;">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96963.77!2d-74.2257!3d39.9015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c18a3d7f8b1111%3A0x1111111111111111!2sBayville%2C%20NJ%2008721!5e0!3m2!1sen!2sus!4v1!5m2!1sen!2sus&q=K-DR+Fencing+%26+Home+Services+Bayville+NJ"
+        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d386000!2d-74.15!3d40.15!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c18a3d7f8b1111%3A0x1111111111111111!2sOcean%20County%2C%20NJ!5e0!3m2!1sen!2sus!4v1"
         width="100%" height="420" style="border:0;display:block;" allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade" title="K-DR Fencing & Home Services Service Area - Bayville NJ">
       </iframe>
@@ -1326,7 +1517,7 @@ footer { background:var(--black); padding:80px 6% 36px; border-top:1px solid rgb
     <p class="section-sub" style="margin:0 auto 40px;">Based in Bayville, NJ — serving Ocean County and all surrounding areas within 80 miles. Residential and commercial clients welcome.</p>
     <div style="border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.1);max-width:900px;margin:0 auto;">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96963.77!2d-74.2257!3d39.9015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c18a3d7f8b1111%3A0x1111111111111111!2sBayville%2C%20NJ%2008721!5e0!3m2!1sen!2sus!4v1!5m2!1sen!2sus&q=K-DR+Fencing+%26+Home+Services+Bayville+NJ"
+        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d386000!2d-74.15!3d40.15!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c18a3d7f8b1111%3A0x1111111111111111!2sOcean%20County%2C%20NJ!5e0!3m2!1sen!2sus!4v1"
         width="100%" height="420" style="border:0;display:block;" allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade" title="K-DR Fencing & Home Services Service Area - Bayville NJ">
       </iframe>
@@ -1740,16 +1931,17 @@ window.addEventListener('scroll',function(){
 
 // ── FAQ ──
 var faqs=[
-  {q:"What areas does K-DR serve?",a:"K-DR is based in Bayville, NJ and services all surrounding areas within an 80-mile radius — including Ocean, Monmouth, Burlington, Atlantic, and Middlesex counties. Call us if you're unsure."},
-  {q:"Do you offer free quotes?",a:"All quotes are 100% free with no obligation. Call us or fill out the online form and we'll get back to you within 24 hours."},
-  {q:"How long does a fence installation take?",a:"Most residential fence installations are completed in 1–2 days depending on project size. Commercial fencing may take longer. We'll provide a clear timeline before we start."},
-  {q:"Do you offer gutter installation?",a:"K-DR specializes in gutter cleaning only — we do not offer gutter installation. We focus on what we do best: thorough, effective cleaning."},
-  {q:"What fencing materials do you work with?",a:"We work with vinyl/PVC, wood, chain link, and aluminum fencing. We'll help you choose the best option for your property, budget, and goals."},
-  {q:"Do you serve commercial clients?",a:"Yes. K-DR handles commercial fencing and snow removal for businesses, warehouses, parking lots, and more throughout NJ."},
-  {q:"When should I schedule fall cleanup?",a:"Late October through early November is ideal before the first hard frost. Book early — spots fill up fast every season."},
-  {q:"Are you licensed and insured?",a:"Yes. K-DR is fully licensed and insured for all services offered. Ask us for documentation when you request your quote."},
-  {q:"How do I get on the snow removal schedule?",a:"Contact us in October or November to secure your spot. Seasonal contracts are available for both residential and commercial properties."},
-  {q:"How large is your service area?",a:"We service an 80-mile radius from Bayville, NJ — covering most of Central and South Jersey. Call to confirm your location."}
+  {q:"What areas does K-DR Fencing serve?",a:"K-DR is based in Bayville, NJ and serves all surrounding areas within an 80-mile radius — including Ocean County (Toms River, Brick, Lakewood, Jackson), Monmouth County (Middletown, Colts Neck, Rumson, Holmdel, Freehold, Marlboro), Burlington, Atlantic, and Middlesex counties. Call us if you are unsure about your town."},
+  {q:"How much does fence installation cost in NJ?",a:"Vinyl fence installation runs $25-$45 per linear foot installed. Wood fence $18-$35 per linear foot. Chain link $12-$22 per linear foot. Aluminum $28-$50 per linear foot. Final cost depends on terrain, gates, and material grade. All quotes are 100% free — call (732) 218-2531 or fill out our form."},
+  {q:"Is K-DR Fencing licensed in New Jersey?",a:"Yes. K-DR Fencing and Home Services is fully licensed and insured in New Jersey. Our NJ Home Improvement Contractor license number is NJHIC# 13VH14078800. We carry full liability insurance on every job."},
+  {q:"How long does fence installation take?",a:"Most residential fence installations are completed in 1-2 days depending on project size. Commercial fencing may take longer. We provide a clear timeline upfront before any work begins."},
+  {q:"What fencing materials do you install?",a:"We install vinyl/PVC, wood, chain link, and aluminum fencing. Each material has different benefits depending on your property, budget, and goals. We help you choose the right one during your free estimate."},
+  {q:"Do you install pool fences?",a:"Yes. We install pool enclosure fencing that meets New Jersey code requirements. Pool fences must be at least 4 feet high with self-closing, self-latching gates. We handle all permit guidance and ensure your fence is fully compliant."},
+  {q:"Do you serve Monmouth County towns like Rumson, Holmdel, and Colts Neck?",a:"Absolutely. We regularly work in Rumson, Holmdel, Colts Neck, Middletown, Marlboro, Freehold, and all of Monmouth County. These are some of our most active service areas for premium fencing projects."},
+  {q:"Do you serve commercial clients?",a:"Yes. K-DR handles commercial fencing, snow removal, and property maintenance for businesses, warehouses, parking lots, HOAs, and commercial properties throughout NJ."},
+  {q:"When should I schedule fall cleanup or gutter cleaning?",a:"Schedule gutter cleaning in late spring and again in late fall after leaves drop. Fall cleanup is best in late October through mid-November before the first hard frost. Book early as slots fill quickly every season."},
+  {q:"How do I get a snow removal contract?",a:"Contact us in October or November to secure your spot for the season. We offer seasonal contracts and per-storm pricing for both residential and commercial properties. Spots are limited so early booking is strongly recommended."},
+  {q:"How do I get a free estimate?",a:"Call us at (732) 218-2531, text us, or fill out the quote form on this page. We respond within 24 hours and all estimates are completely free with no obligation."}
 ];
 
 window.buildFAQ = function(){
@@ -1764,12 +1956,14 @@ window.buildFAQ = function(){
 
 // ── BLOG ──
 var blogs=[
-  {cat:"Fencing",date:"January 15, 2025",title:"5 Reasons Vinyl Fencing is the Best Investment for NJ Homeowners",excerpt:"New Jersey weather is tough on fences. Here's why vinyl is the clear winner for durability, aesthetics, and long-term value.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651646/5eeae808-6aef-4aa9-b9a1-8bf68154168c_v6pn8a.jpg"},
-  {cat:"Snow Removal",date:"December 8, 2024",title:"How to Prepare Your Property for a NJ Winter Storm",excerpt:"Don't wait until the storm hits. Key steps to prepare your driveway, walkways, and lot for heavy snow.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651664/IMG_2659_hotm0l.heic"},
-  {cat:"Fall Cleanup",date:"October 20, 2024",title:"Fall Cleanup Checklist: What Every NJ Homeowner Should Do Before Winter",excerpt:"A clean yard before winter protects your lawn, gutters, and landscaping from serious seasonal damage.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651661/IMG_2090_mezj5r.heic"},
-  {cat:"Gutter Cleaning",date:"September 5, 2024",title:"Why Neglected Gutters Are More Dangerous Than You Think",excerpt:"Clogged gutters cause foundation damage, roof leaks, and ice dams. What happens when maintenance is skipped.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651655/IMG_1157_unczpn.heic"},
-  {cat:"Fencing",date:"August 12, 2024",title:"Privacy vs. Security: Which Fence Type is Right for Your Property?",excerpt:"Not all fences serve the same purpose. We break down key differences to help you make the right decision.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651661/IMG_2231_wypl8h.heic"},
-  {cat:"Curb Appeal",date:"July 3, 2024",title:"Simple Ways to Boost Your Home's Curb Appeal This Season",excerpt:"Property upgrades that make a significant difference — fast wins for any NJ home.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651646/5eeae808-6aef-4aa9-b9a1-8bf68154168c_v6pn8a.jpg"}
+  {cat:"Fencing",date:"May 2026",title:"Best Fence Material for Jersey Shore & Coastal NJ Homes",excerpt:"Salt air, humidity, and ocean winds destroy the wrong fence fast. Here's exactly which materials hold up on LBI, Spring Lake, Rumson, and the Jersey Shore — and which ones to avoid.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651646/5eeae808-6aef-4aa9-b9a1-8bf68154168c_v6pn8a.jpg"},
+  {cat:"Fencing",date:"April 2026",title:"How Much Does a Fence Cost in NJ in 2026?",excerpt:"Vinyl, wood, chain link, aluminum — real price ranges per linear foot installed in Ocean County and Monmouth County NJ. No fluff, just numbers.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651653/IMG_1017_f1psjo.heic"},
+  {cat:"Fencing",date:"March 2026",title:"NJ Pool Fence Code Requirements — What You Need to Know",excerpt:"New Jersey law requires pool enclosures to meet specific height and gate requirements. Here's what's required before your pool opens this summer.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651653/IMG_1106_rgbesc.heic"},
+  {cat:"Snow Removal",date:"February 2026",title:"Snow Removal Contracts in Ocean County NJ — What to Know Before You Sign",excerpt:"Seasonal vs per-storm pricing, what's included, and how to make sure you're covered before the first flake falls.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651664/IMG_2659_hotm0l.heic"},
+  {cat:"Fall Cleanup",date:"October 2025",title:"Fall Cleanup Checklist: What Every NJ Homeowner Should Do Before Winter",excerpt:"A clean yard before winter protects your lawn, gutters, and landscaping from serious seasonal damage. Our complete checklist.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651661/IMG_2090_mezj5r.heic"},
+  {cat:"Gutter Cleaning",date:"September 2025",title:"Why Neglected Gutters Are More Expensive Than You Think",excerpt:"Clogged gutters cause foundation damage, roof leaks, and ice dams. Real cost breakdown of what happens when you skip gutter maintenance.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651655/IMG_1157_unczpn.heic"},
+  {cat:"Fencing",date:"August 2025",title:"Vinyl vs Wood Fence — Which is Better for NJ Homeowners?",excerpt:"We install both every week. Here's an honest comparison of cost, maintenance, lifespan, and curb appeal for New Jersey properties.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651667/IMG_2747_Small_e4mqvw.jpg"},
+  {cat:"Tips",date:"July 2025",title:"5 Signs Your Fence Needs Replacing — Not Just Repairing",excerpt:"Homeowners often spend money patching a fence that needs full replacement. Here's how to tell the difference before you waste money.",photo:"https://res.cloudinary.com/dubkhajl6/image/upload/f_auto,q_auto:best,w_800/v1771651661/IMG_2231_wypl8h.heic"}
 ];
 
 window.buildBlog = function(){
@@ -1789,6 +1983,38 @@ document.addEventListener('DOMContentLoaded',function(){
   buildFAQ();
   buildBlog();
 });
+</script>
+
+<!-- STICKY MOBILE BAR -->
+<div id="sticky-bar" style="
+  position:fixed;bottom:0;left:0;right:0;z-index:9998;
+  background:#111;border-top:2px solid #E8570A;
+  display:none;
+  grid-template-columns:1fr 1fr 1fr;
+  height:60px;
+">
+  <a href="tel:+17322182531" style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:3px;border-right:1px solid #333;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8570A" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.72a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Call
+  </a>
+  <a href="sms:+17322182531" style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:3px;border-right:1px solid #333;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8570A" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Text Us
+  </a>
+  <button onclick="document.getElementById('kdr-popup-overlay').style.display='flex'" style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:#E8570A;color:#fff;border:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;gap:3px;cursor:pointer;width:100%;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    Free Quote
+  </button>
+</div>
+<script>
+// Show sticky bar only on mobile
+(function(){
+  var bar = document.getElementById('sticky-bar');
+  if(window.innerWidth <= 768) bar.style.display = 'grid';
+  window.addEventListener('resize', function(){ bar.style.display = window.innerWidth <= 768 ? 'grid' : 'none'; });
+  // Add bottom padding to body on mobile so content isn't hidden behind bar
+  if(window.innerWidth <= 768) document.body.style.paddingBottom = '60px';
+})();
 </script>
 
 <!-- KDR Lead Capture -->
